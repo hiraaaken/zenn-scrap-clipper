@@ -1,0 +1,132 @@
+{
+  "scrap": {
+    "id": 12345,
+    "post_type": "Scrap",
+    "user_id": 1,
+    "slug": "abc123",
+    "title": "TypeScriptの学習メモ",
+    "closed": false,
+    "closed_at": null,
+    "archived": false,
+    "liked_count": 5,
+    "can_others_post": false,
+    "comments_count": 3,
+    "created_at": "2025-07-17T13:08:17.943+09:00",
+    "last_comment_created_at": "2025-07-18T10:00:00.000+09:00",
+    "should_noindex": false,
+    "path": "/testuser/scraps/abc123",
+    "unlisted": false,
+    "topics": [
+      {
+        "id": 1,
+        "name": "typescript",
+        "taggings_count": 1000,
+        "image_url": "https://example.com/ts.png",
+        "display_name": "TypeScript"
+      },
+      {
+        "id": 2,
+        "name": "javascript",
+        "taggings_count": 2000,
+        "image_url": "https://example.com/js.png",
+        "display_name": "JavaScript"
+      }
+    ],
+    "user": {
+      "id": 1,
+      "username": "testuser",
+      "name": "Test User",
+      "avatar_small_url": "https://example.com/avatar-small.png",
+      "avatar_url": "https://example.com/avatar.png",
+      "bio": "Developer",
+      "github_username": "testuser",
+      "twitter_username": "testuser",
+      "website_url": "https://example.com"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "post_type": "Comment",
+        "slug": "comment1",
+        "user_id": 1,
+        "liked_count": 0,
+        "body_updated_at": null,
+        "created_at": "2025-07-17T14:00:00.000+09:00",
+        "pinned": false,
+        "body_html": "<p>最初のコメントです。</p><p><strong>太字</strong>と<em>斜体</em>のテスト。</p>",
+        "hidden_reason": null,
+        "current_user_liked": false,
+        "is_mine": true,
+        "user": {
+          "id": 1,
+          "username": "testuser",
+          "name": "Test User",
+          "avatar_small_url": "https://example.com/avatar-small.png",
+          "avatar_url": "https://example.com/avatar.png",
+          "bio": "Developer",
+          "github_username": "testuser",
+          "twitter_username": "testuser",
+          "website_url": "https://example.com"
+        },
+        "children": [
+          {
+            "id": 2,
+            "post_type": "Comment",
+            "slug": "comment2",
+            "user_id": 1,
+            "liked_count": 0,
+            "body_updated_at": null,
+            "created_at": "2025-07-17T15:00:00.000+09:00",
+            "pinned": false,
+            "body_html": "<p>ネストしたコメントです。</p><pre><code class=\"language-typescript\">const x: number = 1;</code></pre>",
+            "hidden_reason": null,
+            "current_user_liked": false,
+            "is_mine": true,
+            "user": {
+              "id": 1,
+              "username": "testuser",
+              "name": "Test User",
+              "avatar_small_url": "https://example.com/avatar-small.png",
+              "avatar_url": "https://example.com/avatar.png",
+              "bio": "Developer",
+              "github_username": "testuser",
+              "twitter_username": "testuser",
+              "website_url": "https://example.com"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "post_type": "Comment",
+        "slug": "comment3",
+        "user_id": 1,
+        "liked_count": 0,
+        "body_updated_at": null,
+        "created_at": "2025-07-18T10:00:00.000+09:00",
+        "pinned": false,
+        "body_html": "<p>リンクのテスト: <a href=\"https://example.com\">Example</a></p><p>画像: <img src=\"https://example.com/image.png\" alt=\"画像\" /></p>",
+        "hidden_reason": null,
+        "current_user_liked": false,
+        "is_mine": true,
+        "user": {
+          "id": 1,
+          "username": "testuser",
+          "name": "Test User",
+          "avatar_small_url": "https://example.com/avatar-small.png",
+          "avatar_url": "https://example.com/avatar.png",
+          "bio": "Developer",
+          "github_username": "testuser",
+          "twitter_username": "testuser",
+          "website_url": "https://example.com"
+        },
+        "children": []
+      }
+    ],
+    "current_user_liked": false,
+    "is_mine": true,
+    "positive_comments_count": 3,
+    "commented_users": []
+  }
+}
