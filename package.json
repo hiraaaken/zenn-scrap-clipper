@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src",
     "test": "vitest"
   },
   "keywords": [
