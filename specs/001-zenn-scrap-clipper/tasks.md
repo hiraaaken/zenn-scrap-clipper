@@ -19,12 +19,12 @@
 
 **Purpose**: Project initialization and Chrome extension structure
 
-- [ ] T001 Initialize pnpm project with package.json (name: zenn-scrap-clipper, type: module)
-- [ ] T002 Install dependencies: typescript, vite, @crxjs/vite-plugin, @types/chrome
-- [ ] T003 [P] Create tsconfig.json with strict mode and ES2020 target
-- [ ] T004 [P] Create vite.config.ts with CRXJS plugin configuration
-- [ ] T005 [P] Create manifest.json with Manifest V3 configuration (permissions: declarativeContent, contextMenus, offscreen, clipboardWrite, scripting, activeTab; host_permissions: https://zenn.dev/*)
-- [ ] T006 [P] Create placeholder icons in public/icons/ (icon-16.png, icon-48.png, icon-128.png)
+- [X] T001 Initialize pnpm project with package.json (name: zenn-scrap-clipper, type: module)
+- [X] T002 Install dependencies: typescript, vite, @crxjs/vite-plugin, @types/chrome
+- [X] T003 [P] Create tsconfig.json with strict mode and ES2020 target
+- [X] T004 [P] Create vite.config.ts with CRXJS plugin configuration
+- [X] T005 [P] Create manifest.json with Manifest V3 configuration (permissions: declarativeContent, contextMenus, offscreen, clipboardWrite, scripting, activeTab; host_permissions: https://zenn.dev/*)
+- [X] T006 [P] Create placeholder icons in public/icons/ (icon-16.png, icon-48.png, icon-128.png)
 
 ---
 
@@ -34,13 +34,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T007 Create Zenn API types in src/types/zenn.ts (ZennScrapResponse, ZennScrap, ZennComment, ZennTopic, ZennUser)
-- [ ] T008 [P] Create internal message types in src/types/messages.ts (ShowToastMessage, CopyToClipboardMessage, ClipboardResultMessage)
-- [ ] T009 Implement Zenn API client in src/lib/api.ts (fetchScrap function with error handling)
-- [ ] T010 [P] Implement HTML-to-Markdown converter in src/lib/markdown.ts (convertHtmlToMarkdown, stripImageSize)
-- [ ] T011 Implement scrap-to-Markdown converter in src/lib/converter.ts (generateMarkdown with frontmatter)
-- [ ] T012 Create offscreen.html for clipboard operations in src/offscreen.html
-- [ ] T013 Implement offscreen script in src/offscreen.ts (clipboard write handler)
+- [X] T007 Create Zenn API types in src/types/zenn.ts (ZennScrapResponse, ZennScrap, ZennComment, ZennTopic, ZennUser)
+- [X] T008 [P] Create internal message types in src/types/messages.ts (ShowToastMessage, CopyToClipboardMessage, ClipboardResultMessage)
+- [X] T009 Implement Zenn API client in src/lib/api.ts (fetchScrap function with error handling)
+- [X] T010 [P] Implement HTML-to-Markdown converter in src/lib/markdown.ts (convertHtmlToMarkdown, stripImageSize)
+- [X] T011 Implement scrap-to-Markdown converter in src/lib/converter.ts (generateMarkdown with frontmatter)
+- [X] T012 Create offscreen.html for clipboard operations in src/offscreen.html
+- [X] T013 Implement offscreen script in src/offscreen.ts (clipboard write handler)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -54,11 +54,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T014 [US1] Create background service worker skeleton in src/background.ts (chrome.action.onClicked listener)
-- [ ] T015 [US1] Implement URL parsing to extract slug from current tab URL in src/background.ts
-- [ ] T016 [US1] Implement main copy flow in src/background.ts: fetch → convert → copy via offscreen
-- [ ] T017 [US1] Implement offscreen document creation/reuse in src/background.ts (setupOffscreenDocument)
-- [ ] T018 [US1] Wire clipboard result handling in src/background.ts
+- [X] T014 [US1] Create background service worker skeleton in src/background.ts (chrome.action.onClicked listener)
+- [X] T015 [US1] Implement URL parsing to extract slug from current tab URL in src/background.ts
+- [X] T016 [US1] Implement main copy flow in src/background.ts: fetch → convert → copy via offscreen
+- [X] T017 [US1] Implement offscreen document creation/reuse in src/background.ts (setupOffscreenDocument)
+- [X] T018 [US1] Wire clipboard result handling in src/background.ts
 
 **Checkpoint**: User Story 1 complete - can copy scrap to clipboard via icon click
 
@@ -72,12 +72,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T019 [US2] Create content script in src/content.ts with toast injection function (showToast)
-- [ ] T020 [US2] Implement Shadow DOM toast with CSS animation in src/content.ts
-- [ ] T021 [US2] Add message listener in src/content.ts for show-toast messages
-- [ ] T022 [US2] Update background.ts to send show-toast message after copy success
-- [ ] T023 [US2] Update background.ts to send show-toast message with error on failure
-- [ ] T024 [US2] Register content script in manifest.json for zenn.dev/*/scraps/*
+- [X] T019 [US2] Create content script in src/content.ts with toast injection function (showToast)
+- [X] T020 [US2] Implement Shadow DOM toast with CSS animation in src/content.ts
+- [X] T021 [US2] Add message listener in src/content.ts for show-toast messages
+- [X] T022 [US2] Update background.ts to send show-toast message after copy success
+- [X] T023 [US2] Update background.ts to send show-toast message with error on failure
+- [X] T024 [US2] Register content script in manifest.json for zenn.dev/*/scraps/*
 
 **Checkpoint**: User Story 2 complete - toast feedback working
 
@@ -91,9 +91,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Add context menu creation in src/background.ts onInstalled listener
-- [ ] T026 [US3] Add contextMenus.onClicked listener in src/background.ts
-- [ ] T027 [US3] Extract shared copy logic into reusable function in src/background.ts (handleCopyScrap)
+- [X] T025 [US3] Add context menu creation in src/background.ts onInstalled listener
+- [X] T026 [US3] Add contextMenus.onClicked listener in src/background.ts
+- [X] T027 [US3] Extract shared copy logic into reusable function in src/background.ts (handleCopyScrap)
 
 **Checkpoint**: User Story 3 complete - context menu working
 
@@ -107,9 +107,9 @@
 
 ### Implementation for User Story 4
 
-- [ ] T028 [US4] Add declarativeContent rules in src/background.ts onInstalled listener
-- [ ] T029 [US4] Call chrome.action.disable() by default in src/background.ts
-- [ ] T030 [US4] Configure PageStateMatcher for zenn.dev/*/scraps/* pattern
+- [X] T028 [US4] Add declarativeContent rules in src/background.ts onInstalled listener
+- [X] T029 [US4] Call chrome.action.disable() by default in src/background.ts
+- [X] T030 [US4] Configure PageStateMatcher for zenn.dev/*/scraps/* pattern
 
 **Checkpoint**: User Story 4 complete - icon state indication working
 
@@ -119,11 +119,11 @@
 
 **Purpose**: Unit tests for converter logic and final cleanup
 
-- [ ] T031 [P] Install vitest as dev dependency
-- [ ] T032 [P] Create test fixture in tests/fixtures/sample-scrap.json
-- [ ] T033 [P] Write unit tests for markdown.ts in tests/unit/markdown.test.ts
-- [ ] T034 [P] Write unit tests for converter.ts in tests/unit/converter.test.ts
-- [ ] T035 Add test script to package.json
+- [X] T031 [P] Install vitest as dev dependency
+- [X] T032 [P] Create test fixture in tests/fixtures/sample-scrap.json
+- [X] T033 [P] Write unit tests for markdown.ts in tests/unit/markdown.test.ts
+- [X] T034 [P] Write unit tests for converter.ts in tests/unit/converter.test.ts
+- [X] T035 Add test script to package.json
 - [ ] T036 Validate extension loads in Chrome without errors
 - [ ] T037 Manual E2E test: full flow on real Zenn scrap page
 
