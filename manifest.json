@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Zenn Scrap Clipper",
+  "version": "1.0.0",
+  "description": "ZennのスクラップページをMarkdownに変換してクリップボードにコピーします",
+  "icons": {
+    "16": "public/icons/icon-16.png",
+    "48": "public/icons/icon-48.png",
+    "128": "public/icons/icon-128.png"
+  },
+  "permissions": [
+    "declarativeContent",
+    "contextMenus",
+    "offscreen",
+    "clipboardWrite",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://zenn.dev/*"
+  ],
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://zenn.dev/*/scraps/*"],
+      "js": ["src/content.ts"]
+    }
+  ],
+  "action": {
+    "default_title": "Markdownとしてコピー"
+  }
+}
