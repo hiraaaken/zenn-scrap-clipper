@@ -96,7 +96,16 @@ async function handleCopyScrap(tab: chrome.tabs.Tab): Promise<void> {
 
 // Action click handler
 chrome.action.onClicked.addListener((tab) => {
-  handleCopyScrap(tab);
+  (async () => {
+    try {
+      await handleCopyScrap(tab);
+    } catch (error) {
+      console.error('Failed to handle copy scrap:', error);
+      if (tab.id) {
+        await showToast(tab.id, '予期しないエラーが発生しました', true);
+      }
+    }
+  })();
 });
 
 // Context menu setup
@@ -133,6 +142,15 @@ chrome.runtime.onInstalled.addListener(() => {
 // Context menu click handler
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'copy-markdown' && tab) {
-    handleCopyScrap(tab);
+    (async () => {
+      try {
+        await handleCopyScrap(tab);
+      } catch (error) {
+        console.error('Failed to handle copy scrap from context menu:', error);
+        if (tab.id) {
+          await showToast(tab.id, '予期しないエラーが発生しました', true);
+        }
+      }
+    })();
   }
 });
