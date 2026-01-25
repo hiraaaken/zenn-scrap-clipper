@@ -13,7 +13,6 @@
     "contextMenus",
     "offscreen",
     "clipboardWrite",
-    "scripting",
     "activeTab"
   ],
   "host_permissions": [
