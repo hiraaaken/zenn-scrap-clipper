@@ -1,10 +1,10 @@
 import { fetchScrap, extractSlugFromUrl } from './lib/api.ts';
-import { generateMarkdown } from './lib/converter.ts';
 import type {
-  CopyToClipboardMessage,
+  ConvertAndCopyMessage,
   ClipboardResultMessage,
   ShowToastMessage,
 } from './types/messages.ts';
+import type { ZennScrap } from './types/zenn.ts';
 
 // Offscreen document management
 let creatingOffscreenDocument: Promise<void> | null = null;
@@ -31,23 +31,28 @@ async function setupOffscreenDocument(): Promise<void> {
   creatingOffscreenDocument = chrome.offscreen.createDocument({
     url: offscreenUrl,
     reasons: [chrome.offscreen.Reason.CLIPBOARD],
-    justification: 'Copy Markdown to clipboard',
+    justification: 'Convert scrap to Markdown and copy to clipboard',
   });
 
   await creatingOffscreenDocument;
   creatingOffscreenDocument = null;
 }
 
-async function copyToClipboard(text: string): Promise<ClipboardResultMessage> {
+async function convertAndCopy(scrap: ZennScrap): Promise<ClipboardResultMessage> {
+  console.log('[Background] Setting up offscreen document...');
   await setupOffscreenDocument();
+  console.log('[Background] Offscreen document ready');
 
-  const message: CopyToClipboardMessage = {
-    type: 'copy-to-clipboard',
+  const message: ConvertAndCopyMessage = {
+    type: 'convert-and-copy',
     target: 'offscreen',
-    data: text,
+    scrap,
   };
 
-  return chrome.runtime.sendMessage(message);
+  console.log('[Background] Sending message to offscreen:', message.type);
+  const result = await chrome.runtime.sendMessage(message);
+  console.log('[Background] Received response from offscreen:', result);
+  return result;
 }
 
 async function showToast(tabId: number, text: string, isError: boolean): Promise<void> {
@@ -84,8 +89,7 @@ async function handleCopyScrap(tab: chrome.tabs.Tab): Promise<void> {
     return;
   }
 
-  const markdown = generateMarkdown(result.data.scrap);
-  const clipboardResult = await copyToClipboard(markdown);
+  const clipboardResult = await convertAndCopy(result.data.scrap);
 
   if (clipboardResult.success) {
     await showToast(tabId, 'コピーしました', false);
