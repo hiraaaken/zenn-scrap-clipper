@@ -17,10 +17,10 @@ export interface ToastShownMessage {
   success: boolean;
 }
 
-export interface CopyToClipboardMessage {
-  type: 'copy-to-clipboard';
+export interface ConvertAndCopyMessage {
+  type: 'convert-and-copy';
   target: 'offscreen';
-  data: string;
+  scrap: unknown; // ZennScrap - using unknown to avoid circular import
 }
 
 export interface ClipboardResultMessage {
@@ -31,7 +31,7 @@ export interface ClipboardResultMessage {
 
 export type BackgroundMessage = ToastShownMessage | ClipboardResultMessage;
 
-export type OutgoingMessage = ShowToastMessage | CopyToClipboardMessage;
+export type OutgoingMessage = ShowToastMessage | ConvertAndCopyMessage;
 
 export function isShowToastMessage(msg: unknown): msg is ShowToastMessage {
   return (
@@ -41,14 +41,14 @@ export function isShowToastMessage(msg: unknown): msg is ShowToastMessage {
   );
 }
 
-export function isCopyToClipboardMessage(
+export function isConvertAndCopyMessage(
   msg: unknown
-): msg is CopyToClipboardMessage {
+): msg is ConvertAndCopyMessage {
   return (
     typeof msg === 'object' &&
     msg !== null &&
-    (msg as CopyToClipboardMessage).type === 'copy-to-clipboard' &&
-    (msg as CopyToClipboardMessage).target === 'offscreen'
+    (msg as ConvertAndCopyMessage).type === 'convert-and-copy' &&
+    (msg as ConvertAndCopyMessage).target === 'offscreen'
   );
 }
 
