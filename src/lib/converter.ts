@@ -1,13 +1,17 @@
 import type { ZennScrap, ZennComment } from '../types/zenn.ts';
 import { convertHtmlToMarkdown } from './markdown.ts';
 
+interface CommentGroup {
+  posts: PostData[];
+}
+
 interface ScrapData {
   title: string;
   author: string;
   url: string;
   createdAt: Date;
   topics: string[];
-  posts: PostData[];
+  commentGroups: CommentGroup[];
 }
 
 interface PostData {
@@ -16,26 +20,26 @@ interface PostData {
 }
 
 /**
- * Flatten nested comments using depth-first traversal.
+ * トップレベルコメントごとにグループ化する。
+ * 各グループは親コメントとその返信（DFS順）を含む。
  */
-function flattenComments(comments: ZennComment[]): PostData[] {
-  const result: PostData[] = [];
+function groupCommentsByThread(comments: ZennComment[]): CommentGroup[] {
+  return comments.map((comment) => {
+    const posts: PostData[] = [];
 
-  function traverse(comment: ZennComment) {
-    result.push({
-      htmlContent: comment.body_html,
-      createdAt: new Date(comment.created_at),
-    });
-    for (const child of comment.children) {
-      traverse(child);
+    function traverse(c: ZennComment) {
+      posts.push({
+        htmlContent: c.body_html,
+        createdAt: new Date(c.created_at),
+      });
+      for (const child of c.children) {
+        traverse(child);
+      }
     }
-  }
 
-  for (const comment of comments) {
     traverse(comment);
-  }
-
-  return result;
+    return { posts };
+  });
 }
 
 /**
@@ -50,7 +54,7 @@ function normalizeScrap(scrap: ZennScrap): ScrapData {
     url,
     createdAt: new Date(scrap.created_at),
     topics: scrap.topics.map((t) => t.display_name),
-    posts: flattenComments(scrap.comments),
+    commentGroups: groupCommentsByThread(scrap.comments),
   };
 }
 
@@ -110,12 +114,14 @@ export function generateMarkdown(scrap: ZennScrap): string {
   parts.push(`# ${data.title}`);
   parts.push('');
 
-  // Posts separated by horizontal rules
-  const convertedPosts = data.posts.map((post) =>
-    convertHtmlToMarkdown(post.htmlContent)
+  // グループ内は改行のみ、グループ間は区切り線で結合
+  const groups = data.commentGroups.map((group) =>
+    group.posts
+      .map((post) => convertHtmlToMarkdown(post.htmlContent))
+      .join('\n\n')
   );
 
-  parts.push(convertedPosts.join('\n\n---\n\n'));
+  parts.push(groups.join('\n\n---\n\n'));
 
   return parts.join('\n');
 }
