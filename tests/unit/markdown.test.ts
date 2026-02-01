@@ -86,4 +86,19 @@ describe('convertHtmlToMarkdown', () => {
     const result = convertHtmlToMarkdown(html);
     expect(result).toContain('---');
   });
+
+  it('should normalize consecutive newlines between paragraph and code block', () => {
+    const html = '<p>テキスト</p><pre><code>const x = 1;</code></pre>';
+    const result = convertHtmlToMarkdown(html);
+    // 3つ以上の連続改行が発生しないこと
+    expect(result).not.toMatch(/\n{3,}/);
+    expect(result).toContain('テキスト\n\n```');
+  });
+
+  it('should normalize consecutive newlines around horizontal rules', () => {
+    const html = '<p>Before</p><hr><p>After</p>';
+    const result = convertHtmlToMarkdown(html);
+    expect(result).not.toMatch(/\n{3,}/);
+    expect(result).toBe('Before\n\n---\n\nAfter');
+  });
 });

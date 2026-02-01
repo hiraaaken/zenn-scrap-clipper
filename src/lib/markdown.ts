@@ -18,7 +18,7 @@ export function convertHtmlToMarkdown(html: string): string {
   // Create a temporary DOM element to parse HTML
   const doc = new DOMParser().parseFromString(html, 'text/html');
   const result = processNode(doc.body);
-  return stripImageSize(result.trim());
+  return stripImageSize(result.trim().replace(/\n{3,}/g, '\n\n'));
 }
 
 function processNode(node: Node): string {

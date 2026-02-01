@@ -48,14 +48,25 @@ describe('generateMarkdown', () => {
     expect(nestedCommentIndex).toBeLessThan(thirdCommentIndex);
   });
 
-  it('should separate posts with horizontal rules', () => {
+  it('should separate top-level threads with horizontal rules', () => {
     const scrap = sampleScrap.scrap as ZennScrap;
     const result = generateMarkdown(scrap);
 
-    // Count horizontal rules (posts are separated by ---)
+    // トップレベルコメント間にのみ区切り線がある
+    // サンプルデータ: 2つのトップレベルコメント = 1つの区切り線
     const hrMatches = result.match(/\n\n---\n\n/g) || [];
-    // 3 posts = 2 separators
-    expect(hrMatches.length).toBeGreaterThanOrEqual(2);
+    expect(hrMatches.length).toBe(1);
+  });
+
+  it('should not separate reply comments with horizontal rules', () => {
+    const scrap = sampleScrap.scrap as ZennScrap;
+    const result = generateMarkdown(scrap);
+
+    // Comment1の内容とComment2（返信）の内容の間に---がないことを確認
+    const firstCommentEnd = result.indexOf('**太字**');
+    const nestedCommentStart = result.indexOf('ネストしたコメントです');
+    const segment = result.substring(firstCommentEnd, nestedCommentStart);
+    expect(segment).not.toContain('---');
   });
 
   it('should handle empty topics', () => {
